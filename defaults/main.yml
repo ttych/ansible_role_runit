@@ -1,2 +1,7 @@
 ---
 want_runit: true
+
+runit_packages:
+  - runit
+
+runit_services: []

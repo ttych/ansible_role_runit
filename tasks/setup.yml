@@ -1,0 +1,4 @@
+---
+
+- name: install runit packages
+  include: install.yml packages="{{ runit_packages }}" services="{{ runit_services }}" sysrcs="{{ runit_services_sysrcs }}"

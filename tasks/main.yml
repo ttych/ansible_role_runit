@@ -2,9 +2,7 @@
 - block:
     - include_tasks: context.yml
 
-    - include_tasks: install.yml
-
-    - include_tasks: configure.yml
+    - include_tasks: setup.yml
 
   when: want_runit
 
