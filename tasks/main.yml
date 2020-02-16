@@ -1,0 +1,13 @@
+---
+- block:
+    - include_tasks: context.yml
+
+    - include_tasks: install.yml
+
+    - include_tasks: configure.yml
+
+  when: want_runit
+
+- name: set has_runit
+  set_fact:
+    has_runit: "{{ want_runit }}"
