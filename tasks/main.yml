@@ -3,6 +3,10 @@
     - include_tasks: context.yml
 
     - include_tasks: setup.yml
+      when: not runit_init
+
+    - include_tasks: setup_as_init.yml
+      when: runit_init
 
   when: want_runit
 

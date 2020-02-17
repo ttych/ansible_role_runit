@@ -1,3 +1,5 @@
 ---
-runit_services_sysrcs:
+runit_services:
   - runsvdir
+
+runit_services_sysrcs: "{{ runit_services }}"

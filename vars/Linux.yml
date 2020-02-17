@@ -1,0 +1,3 @@
+---
+runit_services:
+  - runit

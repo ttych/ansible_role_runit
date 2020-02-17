@@ -1,7 +1,11 @@
 ---
 want_runit: true
-
+runit_init: false
 runit_packages:
   - runit
 
 runit_services: []
+
+services_dir: /services
+runit_dir: "{{ services_dir }}/runit"
+runit_services_dir: "{{ runit_dir }}/services"

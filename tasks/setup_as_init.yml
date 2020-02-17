@@ -1,0 +1,4 @@
+---
+
+fail:
+  msg: "runit for init is not implemented"

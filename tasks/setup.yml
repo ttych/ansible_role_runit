@@ -2,3 +2,71 @@
 
 - name: install runit packages
   include: install.yml packages="{{ runit_packages }}" services="{{ runit_services }}" sysrcs="{{ runit_services_sysrcs }}"
+
+
+- name: install runit in addition to
+  block:
+    - name: set runit directories
+      file:
+        path: "{{ item.path }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+        state: directory
+      loop:
+        - { path: "{{ runit_dir }}", owner: 0, group: 0, mode: "0755" }
+        - { path: "{{ runit_services_dir }}", owner: 0, group: 0, mode: "0755" }
+
+    - name: configure service on FreeBSD
+      block:
+        - include: sysrc.yml key="{{ runit_sysrc_entry.key }}" value="{{ runit_sysrc_entry.value }}"
+          loop:
+            - { key: "runsvdir_enable", value: "YES" }
+            - { key: "runsvdir_path", value: "{{ runit_services_dir }}" }
+          loop_control:
+            loop_var: runit_sysrc_entry
+          register: t_runit_service
+      when: ansible_distribution == 'FreeBSD'
+
+    - name: configure service on Linux
+      block:
+        - name: use custom svscanboot
+          template:
+            src: runsvdirboot
+            dest: "{{ runit_dir }}/runsvdirboot"
+            owner: root
+            group: root
+            mode: '0755'
+          register: t_runsvdirboot
+
+        - name: use runit custom service systemd script
+          template:
+            src: systemd/system/runit.service
+            dest: /lib/systemd/system/runit.service
+            owner: root
+            group: root
+          when: ansible_service_mgr == 'systemd'
+          register: t_runit_service
+
+        - name: enable runit service
+          service:
+            name: "{{ item }}"
+            enabled: yes
+            state: started
+          loop: "{{ runit_services }}"
+          register: t_service
+
+        - name: restart runit service
+          service:
+            name: "{{ item }}"
+            state: restarted
+          loop: "{{ runit_services }}"
+          when: (t_runit_service.changed or t_runsvdirboot.changed) and not t_service.changed
+
+      when: ansible_system == 'Linux'
+
+    - name: start service
+      service:
+        name: "{{ item }}"
+        state: started
+      loop: "{{ runit_services }}"

@@ -1,0 +1,12 @@
+[Unit]
+Description=Runit service supervision
+Documentation=http://smarden.org/runit/
+
+[Service]
+ExecStart={{ runit_dir }}/runsvdirboot
+KillSignal=SIGHUP
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
