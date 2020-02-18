@@ -1,0 +1,8 @@
+---
+runit_packages: "{{ runit_base_packages + ['runit-systemd'] }}"
+
+runit_services:
+  - runit
+
+runit_dir: /etc/runit
+runit_services_dir: /etc/runit/runsvdir/default
