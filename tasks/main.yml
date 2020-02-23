@@ -2,8 +2,6 @@
 - block:
     - include_tasks: context.yml
 
-# FIXME
-      
     - include_tasks: install.yml
 
     - include_tasks: setup.yml
