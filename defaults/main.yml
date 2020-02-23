@@ -1,5 +1,5 @@
 ---
-want_runit: true
+want_runit: false
 runit_init: false
 runit_use_services: true
 
