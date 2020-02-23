@@ -8,3 +8,11 @@
     - "{{ ansible_os_family }}.yml"
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_distribution + '_' + ansible_distribution_release }}.yml"
+
+- name: include services variables
+  include_vars:
+    dir: vars
+    files_matching: "{{ item }}"
+  loop:
+    - services.yml
+  when: has_services|d(false)

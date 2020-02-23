@@ -1,7 +1,6 @@
 ---
 runit_services:
   - runsvdir
-runit_services_sysrcs: "{{ runit_services }}"
 
 runit_dir: /var/service
 runit_services_dir: /var/service

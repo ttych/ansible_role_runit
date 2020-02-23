@@ -2,11 +2,9 @@
 - block:
     - include_tasks: context.yml
 
-    - include_vars:
-        file: services.yml
-      when: has_services|d(false)
-
-    - include_tasks: install_common.yml
+# FIXME
+      
+    - include_tasks: install.yml
 
     - include_tasks: setup.yml
       when: not runit_init

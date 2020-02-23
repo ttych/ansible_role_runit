@@ -46,9 +46,6 @@
 
       when: ansible_system == 'Linux' and has_services
 
-    - debug:
-        msg: "{{ runit_services }}"
-
     - name: activate services on Linux
       block:
         - name: enable runit service
