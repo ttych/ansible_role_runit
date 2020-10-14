@@ -1,16 +1,16 @@
 ---
 want_runit: false
 runit_init: false
-runit_use_services: true
+runit_use_service: true
 
 runit_base_packages:
   - runit
 runit_packages: "{{ runit_base_packages }}"
-runit_services_packages: []
+runit_service_packages: []
 runit_services: []
 
 runit_logger_user: logger
 runit_logger_group: logger
 
 
-services_dir: /services
+service_dir: /service

@@ -1,5 +1,5 @@
 ---
-runit_dir: "{{ services_dir }}/runit"
-runit_services_dir: "{{ runit_dir }}/services"
+runit_dir: "{{ service_dir }}/runit"
+runit_service_dir: "{{ runit_dir }}/service"
 
 runit_packages: "{{ runit_base_packages }}"

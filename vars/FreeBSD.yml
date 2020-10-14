@@ -3,4 +3,4 @@ runit_services:
   - runsvdir
 
 runit_dir: /var/service
-runit_services_dir: /var/service
+runit_service_dir: /var/service

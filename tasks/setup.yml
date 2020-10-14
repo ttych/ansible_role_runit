@@ -11,20 +11,20 @@
         state: directory
       loop:
         - { path: "{{ runit_dir }}", owner: 0, group: 0, mode: "0755" }
-        - { path: "{{ runit_services_dir }}", owner: 0, group: 0, mode: "0755" }
+        - { path: "{{ runit_service_dir }}", owner: 0, group: 0, mode: "0755" }
 
     - name: configure service on FreeBSD
       block:
         - include: sysrc.yml key="{{ runit_sysrc_entry.key }}" value="{{ runit_sysrc_entry.value }}"
           loop:
             - { key: "runsvdir_enable", value: "YES" }
-            - { key: "runsvdir_path", value: "{{ runit_services_dir }}" }
+            - { key: "runsvdir_path", value: "{{ runit_service_dir }}" }
           loop_control:
             loop_var: runit_sysrc_entry
           register: t_runit_service
       when: ansible_distribution == 'FreeBSD'
 
-    - name: configure services for services on Linux
+    - name: configure service for service on Linux
       block:
         - name: use custom svscanboot
           template:
@@ -44,9 +44,9 @@
           when: ansible_service_mgr == 'systemd'
           register: t_runit_service
 
-      when: ansible_system == 'Linux' and has_services
+      when: ansible_system == 'Linux' and has_service
 
-    - name: activate services on Linux
+    - name: activate service on Linux
       block:
         - name: enable runit service
           service:
